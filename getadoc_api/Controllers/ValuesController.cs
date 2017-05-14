@@ -8,6 +8,7 @@ using System.Web.Http;
 namespace getadoc_api.Controllers
 {
     [Authorize]
+    [AllowAnonymous]
     public class ValuesController : ApiController
     {
         // GET api/values

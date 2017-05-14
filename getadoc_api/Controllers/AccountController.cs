@@ -65,6 +65,16 @@ namespace getadoc_api.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
+        //POST api/Account/Login?UserName=%34&password=1234
+        [Route("Login")]
+        public IHttpActionResult Login(string username,string password)
+        {
+            
+            if(User.Identity.IsAuthenticated)
+            {
+
+            }
+        }
 
         // POST api/Account/Logout
         [Route("Logout")]
