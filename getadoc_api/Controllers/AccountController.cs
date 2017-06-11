@@ -16,6 +16,9 @@ using Microsoft.Owin.Security.OAuth;
 using getadoc_api.Models;
 using getadoc_api.Providers;
 using getadoc_api.Results;
+using System.Web.Helpers;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace getadoc_api.Controllers
 {
@@ -25,9 +28,11 @@ namespace getadoc_api.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _dbcontext;
 
         public AccountController()
         {
+           _dbcontext = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -65,15 +70,16 @@ namespace getadoc_api.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
-        //POST api/Account/Login?UserName=%34&password=1234
+        //POST api/Account/Login?UserName=ani24sri@gmail.com&password=1234
         [Route("Login")]
         public IHttpActionResult Login(string username,string password)
         {
-            
-            if(User.Identity.IsAuthenticated)
+            var user = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_dbcontext));
+            if (user.Find(username,password)== null)
             {
-
+                return null;
             }
+            return Ok();
         }
 
         // POST api/Account/Logout
